@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Linked List Visualization Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #linked-list {
+            display: flex;
+            justify-content: center;
+        }
+
+        .node {
+            width: 50px;
+            height: 30px;
+            background-color: #007bff;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            border-radius: 5px;
+        }
+
+        #input {
+            width: 100px;
+            margin: 10px;
+        }
+
+        button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Linked List Visualization Tool</h1>
+        <input type="text" id="input" placeholder="Node Value">
+        <button onclick="addNode()">Add Node</button>
+        <button onclick="removeNode()">Remove Node</button>
+        <button onclick="clearList()">Clear List</button>
+        <div id="linked-list"></div>
+    </div>
+
+    <script>
+        class Node {
+            constructor(value) {
+                this.value = value;
+                this.next = null;
+            }
+        }
+
+        let head = null;
+
+        function addNode() {
+            const value = document.getElementById("input").value;
+            if (value.trim() !== "") {
+                const newNode = new Node(value);
+                newNode.next = head;
+                head = newNode;
+                renderLinkedList();
+                document.getElementById("input").value = "";
+            }
+        }
+
+        function removeNode() {
+            if (head !== null) {
+                head = head.next;
+                renderLinkedList();
+            }
+        }
+
+        function clearList() {
+            head = null;
+            renderLinkedList();
+        }
+
+        function renderLinkedList() {
+            const linkedListContainer = document.getElementById("linked-list");
+            linkedListContainer.innerHTML = "";
+
+            let currentNode = head;
+            while (currentNode !== null) {
+                const nodeElement = document.createElement("div");
+                nodeElement.classList.add("node");
+                nodeElement.innerText = currentNode.value;
+                linkedListContainer.appendChild(nodeElement);
+                currentNode = currentNode.next;
+            }
+        }
+    </script>
+</body>
+</html>
